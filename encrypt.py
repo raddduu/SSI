@@ -25,16 +25,19 @@ def write_output_file(output_file_path, output_content):
         output_file.write(output_content)
 
 def transform_image(input_file_path, cipher_key):
+    original_image = cv.imread(input_file_path, cv.IMREAD_GRAYSCALE)
+    original_height, original_width = original_image.shape
+
     file_data = read_input_file(input_file_path)
-    encrypted_output = file_data[:file_data.find(b'255\n') + 4] + encrypt_input(file_data[file_data.find(b'255\n') + 4:].decode('latin-1'), cipher_key)
+    header_data = file_data[:file_data.find(b'255\n') + 4]
+    print(header_data)
+    encrypted_output = header_data + encrypt_input(file_data[file_data.find(b'255\n') + 4:].decode('latin-1'), cipher_key)
     write_output_file(os.path.splitext(input_file_path)[0] + '_encr.ppm', encrypted_output)
 
     encrypted_image_data = np.frombuffer(encrypted_output, dtype=np.uint8)
-    image_height = int(np.sqrt(len(encrypted_image_data)))
-    image_width = len(encrypted_image_data) // image_height
-    encrypted_image_data = encrypted_image_data[:image_height*image_width].reshape((image_height, image_width))
+    encrypted_image_data = encrypted_image_data[:original_height*original_width].reshape((original_height, original_width))
 
-    cv.imshow('Encrypted Image', cv.resize(encrypted_image_data, (0, 0), fx=2, fy=2))
+    cv.imshow('Encrypted Image', cv.resize(encrypted_image_data, (0, 0), fx=0.7, fy=0.7))
     cv.waitKey(0)
     cv.destroyAllWindows()
 

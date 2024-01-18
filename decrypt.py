@@ -40,26 +40,26 @@ for i in range(1, 9):
         img = cv.imread(os.path.join(results_dir, image_file), cv.IMREAD_GRAYSCALE)
         
         if img is not None:
-            img = cv.threshold(img, 127, 255, cv.THRESH_BINARY)[1]
-            img = cv.medianBlur(img, 3)
+            # img = cv.threshold(img, 127, 255, cv.THRESH_BINARY)[1]
+            # img = cv.medianBlur(img, 3)
 
-            kernel = np.ones((2,2),np.uint8)
-            img = cv.morphologyEx(img, cv.MORPH_OPEN, kernel)
-            img = cv.morphologyEx(img, cv.MORPH_CLOSE, kernel)
+            # kernel = np.ones((2,2),np.uint8)
+            # img = cv.morphologyEx(img, cv.MORPH_OPEN, kernel)
+            # img = cv.morphologyEx(img, cv.MORPH_CLOSE, kernel)
 
-            img = cv.medianBlur(img, 3)
+            # img = cv.medianBlur(img, 3)
 
-            img = cv.Laplacian(img, cv.CV_8U, ksize=1)
+            # img = cv.Laplacian(img, cv.CV_8U, ksize=1)
 
-            kernel = np.ones((3,3),np.uint8)
-            img = cv.dilate(img, kernel, iterations=1)
+            # kernel = np.ones((3,3),np.uint8)
+            # img = cv.dilate(img, kernel, iterations=1)
 
-            img = cv.Laplacian(img, cv.CV_8U, ksize=3)
+            # img = cv.Laplacian(img, cv.CV_8U, ksize=3)
 
-            kernel = np.ones((5,5),np.uint8)
-            img = cv.morphologyEx(img, cv.MORPH_CLOSE, kernel)
+            # kernel = np.ones((5,5),np.uint8)
+            # img = cv.morphologyEx(img, cv.MORPH_CLOSE, kernel)
 
-            img = cv.medianBlur(img, 3)
+            # img = cv.medianBlur(img, 3)
 
             cv.imshow(image_file, img)
             cv.waitKey(0)
